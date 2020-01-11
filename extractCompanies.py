@@ -5,11 +5,15 @@
 
 
 import json
+import os
 
-with open('/home/glenn/code/tmx/tmx_listings/listings.json') as f:
+
+cwd = os.getcwd()
+
+with open(cwd + '/data/tmx_listings/listings.json') as f:
   tmxLoad = json.load(f)
 
-with open('/home/glenn/code/debenture/data/DebtInstrumentsProcessed.json') as g:
+with open(cwd + '/../debenture/data/DebtInstrumentsProcessed.json') as g:
   knownDebentureLoad = json.load(g)
 
 

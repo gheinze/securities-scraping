@@ -2,12 +2,15 @@
 
 # Pull the TMX listings from the TMX website and create a consolodated json file.
 # TMX provides a listing page letter by letter.
+# See also: https://tsx.com/listings/current-market-statistics
+#           excel with sector and data: https://tsx.com/resource/en/571
+
 
 TMX_API_URL="https://tsx.com/json/company-directory/search/tsx/"
 TMX_QUERY_INTERVAL_SECONDS="15s"
 
 NOW=$(date +'%Y-%m-%d_%H-%M')
-DOWNLOAD_DIR="./tmx_listings/$NOW"
+DOWNLOAD_DIR="./data/tmx_listings/$NOW"
 
 CONCATENATED_LISTINGS_FILE=".listings.json"
 LISTINGS_SYMLINK=$DOWNLOAD_DIR/../listings.json
@@ -75,7 +78,7 @@ function concatResults {
 
     mv "$RESULT" "$DOWNLOAD_DIR/$CONCATENATED_LISTINGS_FILE"
 
-    ln -s "$DOWNLOAD_DIR/$CONCATENATED_LISTINGS_FILE" "$LISTINGS_SYMLINK"
+    ln -s -f "$DOWNLOAD_DIR/$CONCATENATED_LISTINGS_FILE" "$LISTINGS_SYMLINK"
 
 }
 
@@ -86,8 +89,8 @@ function concatResults {
 ###########
 
 
-#prep
-#pull
+prep
+pull
 concatResults
 
 

@@ -7,12 +7,27 @@ import os
 
 
 def _help():
-    return """
-    ETL. Set your environment with eodConfig.bash
+    help_msg = """
+
+    BOTH: Set your environment with eodConfig.bash
+
+    ETL:
     
         export EOD_FILESET_ROOT_DIR=./data/eod_listings/
         python -c 'import eodPushToDb; eodPushToDb.etl()'
+
+    LOAD: Set these environment variables as well: 
+
+        export EOD_DOWNLOAD_TIME="2020-01-30_22-37"
+        
+        # defaults to TSX
+        export EOD_EXCHANGE=TSX
+        
+        # defaults using configured exchange and download time
+        export EOD_CSV="./data/eod_listings/TSX/2019-12-29_22-37/TSX~2019-12-29_22-37.quotes.csv"
+
     """
+    print(help_msg)
 
 
 def _get_db_config():
@@ -96,13 +111,16 @@ def main():
         _help()
         exit(0)
 
-    csv = os.environ.get('EOD_CSV')
-    exchange = os.environ.get('EOD_EXCHANGE', 'TSX')
     date_time = os.environ.get('EOD_DOWNLOAD_TIME')
+    exchange = os.environ.get('EOD_EXCHANGE', 'TSX')
+
+    default_load_file = "./data/eod_listings/" + exchange + "/" + date_time + "/" + exchange + "~" + date_time + ".quotes.csv"
+
+    csv = os.environ.get('EOD_CSV', default_load_file)
 
     load_csv_into_db(csv, exchange, date_time)
 
-    print("Loaded")
+    print("Loaded", csv)
 
 
 if __name__ == "__main__":
