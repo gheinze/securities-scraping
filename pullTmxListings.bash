@@ -10,6 +10,7 @@ TMX_API_URL="https://tsx.com/json/company-directory/search/tsx/"
 TMX_QUERY_INTERVAL_SECONDS="15s"
 
 NOW=$(date +'%Y-%m-%d_%H-%M')
+#NOW="2020-01-18_10-11"
 DOWNLOAD_DIR="./data/tmx_listings/$NOW"
 
 CONCATENATED_LISTINGS_FILE=".listings.json"
@@ -78,7 +79,7 @@ function concatResults {
 
     mv "$RESULT" "$DOWNLOAD_DIR/$CONCATENATED_LISTINGS_FILE"
 
-    ln -s -f "$DOWNLOAD_DIR/$CONCATENATED_LISTINGS_FILE" "$LISTINGS_SYMLINK"
+    ln -s -f "./$NOW/$CONCATENATED_LISTINGS_FILE" "$LISTINGS_SYMLINK"
 
 }
 
